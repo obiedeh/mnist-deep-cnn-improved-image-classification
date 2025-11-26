@@ -1,179 +1,150 @@
-# mnist-deep-cnn-improved-image-classification
+mnist-deep-cnn-improved-image-classification
+<p align="center"> <img src="https://img.shields.io/badge/MNIST-Deep%20CNN-blue?style=for-the-badge"> <img src="https://img.shields.io/badge/BatchNorm-Enabled-green?style=for-the-badge"> <img src="https://img.shields.io/badge/Dropout-0.25%2F0.25%2F0.5-orange?style=for-the-badge"> <img src="https://img.shields.io/badge/Augmentation-Active-purple?style=for-the-badge"> </p>
+
+A research study comparing a baseline CNN to an improved CNN using Batch Normalization, Dropout, and Data Augmentation on the MNIST handwritten digit dataset.
 
 📘 Project Overview
 
-This repository presents a research-driven exploration into improving the performance and generalization of Convolutional Neural Networks (CNNs) on the MNIST handwritten digit dataset.
-We begin with a baseline 2-block CNN and progressively enhance it using:
+This repository contains a single Jupyter Notebook that implements a complete research workflow for MNIST handwritten digit classification. The notebook introduces a baseline CNN and an improved CNN, then compares their learning behavior, accuracy, robustness, and convergence stability.
 
-Batch Normalization
+The improved model integrates modern deep learning techniques such as Batch Normalization, Dropout regularization, and Data Augmentation to significantly enhance generalization and robustness to variations in handwritten digits.
 
-Dropout Regularization
-
-Data Augmentation
-
-Improved training dynamics
-
-The result is a deeper, more stable, and more robust CNN architecture capable of achieving state-of-the-art MNIST performance with strong generalization characteristics.
-
-This repository provides both the baseline and improved models for comparison, enabling reproducible benchmarking and architecture experimentation.
+This project is ideal for demonstrating foundational deep learning concepts, experimentation, and research-oriented performance analysis.
 
 🎯 Research Objectives
 
-This project investigates:
+This study answers several important research questions:
 
-1. How classic CNNs behave on MNIST using minimal architecture.
+How does a simple CNN perform on MNIST?
 
-Baseline model uses only Conv → Pool → Conv → Pool → Dense.
+How do BatchNorm and Dropout affect convergence?
 
-2. How to systematically improve model robustness and generalization using:
+How much does data augmentation improve generalization?
 
-Batch normalization
+How do baseline and improved architectures differ in robustness?
 
-Dropout at multiple depths
+Can a small CNN approach state-of-the-art results on MNIST?
 
-Data augmentation (rotation, translation, zoom)
+🧠 What’s Inside the Notebook
 
-Improved regularization strategies
+Your single .ipynb file includes:
 
-3. Convergence stability & learning dynamics
+✔ 1. Dataset Loading & Preprocessing
 
-Training vs validation curves
+MNIST import
 
-Loss behaviors
+Normalization to [0, 1]
 
-Train–validation accuracy gap
+Reshaping to (28, 28, 1)
 
-Sensitivity to augmentation
+✔ 2. Baseline CNN Model
 
-4. Generalization to shifted, rotated, or deformed digits
+Architecture:
 
-Evaluating how augmentation affects robustness.
+Conv(32) → MaxPool →
+Conv(64) → MaxPool →
+Flatten → Dense(128) → Dense(10)
+
+✔ 3. Improved CNN Model
+
+Enhancements applied:
+
+Data Augmentation (rotation, translation, zoom)
+
+Batch Normalization (Conv + Dense layers)
+
+Dropout (0.25, 0.25, 0.5)
+
+Architecture:
+
+Data Augmentation →
+Conv(32) + BN + ReLU + MaxPool + Dropout →
+Conv(64) + BN + ReLU + MaxPool + Dropout →
+Flatten → Dense(128) + BN + ReLU + Dropout →
+Dense(10)
+
+✔ 4. Model Training
+
+Adam optimizer
+
+Sparse categorical crossentropy
+
+Validation split = 0.10
+
+5 training epochs
+
+✔ 5. Evaluation
+
+Training & validation accuracy curves
+
+Training & validation loss curves
+
+Test set evaluation
+
+Sample predictions with confidence
+
+Baseline vs Improved comparison
 
 📊 Key Results
 Baseline CNN
 
-Accuracy: ~99% test accuracy
+~99% test accuracy
 
-Behavior: Fast convergence, no overfitting
+Minimal overfitting
 
-Weakness: Less robust to shifts & rotations
+Smooth, stable learning curves
+
+Excellent performance on clean MNIST digits
 
 Improved CNN
 
-Accuracy: Higher-than-baseline
+Higher accuracy than baseline
 
-Techniques used:
-✓ Batch Normalization
-✓ Dropout (0.25/0.25/0.5)
-✓ Data Augmentation
+Better robustness to rotated/shifted digits
 
-Behavior:
+More stable training
 
-Smoother optimization
+Better generalization due to augmentation, BN, and dropout
 
-Higher generalization
+📈 Why the Improvements Work
+Batch Normalization
 
-More stable validation loss
+Stabilizes training
 
-Stronger performance on perturbed digits
+Enables higher learning rates
 
-🧠 Architecture Summary
-Baseline Architecture
-Input → Conv(32) → MaxPool →
-        Conv(64) → MaxPool →
-        Flatten → Dense(128) → Dense(10)
+Reduces internal covariate shift
 
-Improved Architecture
-Input → Data Augmentation →
-    Conv(32) → BatchNorm → ReLU → MaxPool → Dropout(0.25)
-    Conv(64) → BatchNorm → ReLU → MaxPool → Dropout(0.25)
-    Flatten →
-    Dense(128) → BatchNorm → ReLU → Dropout(0.5) →
-    Dense(10, softmax)
+Dropout
 
-📦 Repository Structure
+Prevents co-adaptation
 
-A clean, research-style folder layout:
+Reduces overfitting
 
-mnist-deep-cnn-improved-image-classification/
-│
-├── notebooks/
-│   ├── 01_baseline_cnn.ipynb
-│   ├── 02_improved_cnn.ipynb
-│   └── 03_results_analysis.ipynb
-│
-├── src/
-│   ├── baseline_model.py
-│   ├── improved_model.py
-│   ├── train.py
-│   └── utils.py
-│
-├── results/
-│   ├── plots/
-│   │   ├── baseline_accuracy_curve.png
-│   │   ├── improved_accuracy_curve.png
-│   │   └── comparison.png
-│   └── metrics/
-│       ├── baseline_metrics.json
-│       └── improved_metrics.json
-│
-├── README.md
-└── requirements.txt
+Encourages redundant robust features
 
-🚀 How to Run
-Clone repo
+Data Augmentation
+
+Expands training distribution
+
+Improves invariance to small transformations
+
+Enhances real-world performance
+
+🚀 How to Run This Project
+1. Clone the repository
 git clone https://github.com/obiedeh/mnist-deep-cnn-improved-image-classification.git
 cd mnist-deep-cnn-improved-image-classification
 
-Install dependencies
+2. Install dependencies
 pip install -r requirements.txt
 
-Train baseline model
-python src/train.py --model baseline
+3. Launch Jupyter notebook
+jupyter notebook
 
-Train improved model
-python src/train.py --model improved
+4. Open the notebook file
 
-📈 Training Visualizations
-
-The repository includes comparison plots:
-
-Baseline vs Improved accuracy curves
-
-Baseline vs Improved loss curves
-
-Prediction samples with confidence
-
-Generalization performance improvements
-
-These are generated automatically inside the results/plots/ folder.
-
-📝 Research Notes & Insights
-Findings
-
-Batch Normalization improves optimization stability.
-
-Dropout prevents co-adaptation of layers.
-
-Augmentation significantly increases robustness to digit variability.
-
-Improved CNN consistently outperforms baseline on rotated/shifted digits.
-
-Baseline CNN already performs well, but improvement techniques make the model deploy-ready.
-
-Why This Matters
-
-MNIST is often considered “too easy,” but it provides the perfect controlled environment for studying:
-
-Learning dynamics
-
-Regularization effectiveness
-
-Convergence patterns
-
-Model robustness
-
-This project demonstrates how classic CNNs can be turned from high-performing into highly robust.
+Your single notebook file (e.g., mnist_cnn.ipynb) contains the full workflow.
 
 📚 Technologies Used
 
@@ -183,23 +154,37 @@ NumPy
 
 Matplotlib
 
-Python 3.10+
+Python 3.x
 
-🧪 Sample Research Questions the Repo Addresses
+Jupyter Notebook
 
-How much does data augmentation influence CNN generalization?
+🧪 Research Questions Explored
 
-Does dropout at early layers or late layers matter more?
+This notebook investigates:
 
-What role does batch normalization play in convergence?
+How do CNNs learn representations of handwritten digits?
 
-How close can a small CNN get to “state-of-the-art”?
+What causes validation–training performance gaps?
 
-How do baseline and improved models differ in learning dynamics?
+How does augmentation improve robustness?
+
+What architectural choices yield stability vs performance?
+
+How small can a CNN be and still achieve ~99% accuracy?
 
 🤝 Contributions
 
-Pull requests for additional architectures (e.g., ResNet-style MNIST, depthwise CNNs, transformer baselines) are welcome.
+Since this is a research-oriented notebook, contributions are welcome in the form of:
+
+New architectures (e.g., ResNet-style MNIST)
+
+Additional augmentation strategies
+
+Hyperparameter sweeps
+
+Improved visualization tools
+
+Comparison with other models (MLP, SVM, Transformers)
 
 📄 License
 
